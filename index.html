@@ -31,7 +31,7 @@
     <script type="module">
       const heart = document.getElementById("heart");
 
-      function animate(duration, hasBeaten) {
+      function animate(duration, hasBeaten, count) {
         const startingState = {
           transform: hasBeaten ? "scale(1.1)" : "scale(1)"
         };
@@ -45,12 +45,16 @@
           duration
         });
 
-        duration = duration < 100 ? 100 : duration * 0.9;
-        console.log(duration);
-        animation.finished.then(() => animate(duration, !hasBeaten));
+        if (count > 40) {
+          duration = 2000;
+          count = 0;
+        }
+
+        duration = duration < 100 ? 100 : duration * 0.8;
+        animation.finished.then(() => animate(duration, !hasBeaten, ++count));
       }
 
-      animate(2000, false);
+      animate(2000, false, 0);
     </script>
   </body>
 </html>
