@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animations</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-color: #f69fa8;
+      }
+
+      #container {
+        height: 100%;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+      }
+
+      #heart {
+        width: 80vw;
+        max-width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"><img id="heart" src="heart.jpg" alt="A heart!" /></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.2/web-animations-next.min.js"></script>
+    <script type="module">
+      const heart = document.getElementById("heart");
+
+      function animate(duration, hasBeaten) {
+        const startingState = {
+          transform: hasBeaten ? "scale(1.1)" : "scale(1)"
+        };
+        const endingState = {
+          transform: hasBeaten ? "scale(1)" : "scale(1.1)"
+        };
+
+        const animation = heart.animate([startingState, endingState], {
+          fill: "forwards",
+          easing: "ease-out",
+          duration
+        });
+
+        duration = duration < 100 ? 100 : duration * 0.9;
+        console.log(duration);
+        animation.finished.then(() => animate(duration, !hasBeaten));
+      }
+
+      animate(2000, false);
+    </script>
+  </body>
+</html>
